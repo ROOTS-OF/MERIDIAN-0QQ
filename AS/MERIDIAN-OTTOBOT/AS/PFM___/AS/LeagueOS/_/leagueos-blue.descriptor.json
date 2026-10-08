@@ -1,0 +1,40 @@
+{
+  "contractVersion": "1.0.0",
+  "artifact": {
+    "type": "wsl-export",
+    "platform": "WSL2 on Windows 11",
+    "architecture": "x86_64",
+    "digest": null
+  },
+  "source": {
+    "recipe": "LeagueOS_Blue WSL2 distro (native WSL git checkouts bind-mounted into Docker, not /mnt/c/) — no standalone export recipe file exists yet; this descriptor records the running instance's shape, not a reproducible build script.",
+    "provenance": "PFM AGENTS.md's 'LeagueOS daily staging workflows' section — the real, currently-running four-container 2x2 grid serving LeagueOS demo/candidate traffic."
+  },
+  "lifecycle": {
+    "build": null,
+    "export": null,
+    "restore": null,
+    "validate": "node scripts/validate-descriptor.js AS/MERIDIAN-OTTOBOT/AS/PFM___/AS/LeagueOS/_/leagueos-blue.descriptor.json"
+  },
+  "supportedTarget": "WSL2 on Windows 11, LeagueOS_Blue distro, its own Docker daemon",
+  "acceptanceReceipt": {
+    "command": "node scripts/validate-descriptor.js AS/MERIDIAN-OTTOBOT/AS/PFM___/AS/LeagueOS/_/leagueos-blue.descriptor.json",
+    "lastRunAt": "2026-10-08T20:00:00Z",
+    "lastResult": "PASS"
+  },
+  "isolation": {
+    "team": "blue",
+    "dockerDataRoot": "unknown — needs verification",
+    "bridge": "unknown — needs verification",
+    "addressPool": "unknown — needs verification",
+    "networks": ["unknown — needs verification"],
+    "volumes": ["unknown — needs verification"],
+    "composeProject": "leagueos-staging-anon, leagueos-staging-synth, leagueos-candidate-anon, leagueos-candidate-synth (four real Compose projects under one WSL distro/Docker daemon — this descriptor covers the whole LeagueOS_Blue instance, not a single project; see note below)",
+    "hostPorts": [8207, 8208, 8209, 8210],
+    "bindMounts": [
+      "/var/lib/leagueos/staging",
+      "/var/lib/leagueos/candidate"
+    ]
+  },
+  "_note": "The real confirmed facts here (hostPorts, bindMounts, the four Compose project names, the distro name) come straight from PFM AGENTS.md's 'LeagueOS daily staging workflows' section, verified via `wsl.exe -d LeagueOS_Blue -- docker ps` in past sessions. dockerDataRoot/bridge/addressPool/networks/volumes are left as the honest 'unknown — needs verification' placeholder this contract requires rather than a guess — AO_WSL is the right owner to confirm these via a fresh `docker info` / `docker network inspect` on LeagueOS_Blue's own daemon. This descriptor's job is to make that gap visible and checkable, not to pretend it's already closed."
+}
